@@ -1,0 +1,14 @@
+{
+  "editor.tabSize": 2, // 所有文件缩进2个空格
+  "eslint.validate": [
+    // 让vscode可以高亮vue文件中的js代码eslint问题代码
+    "javascript",
+    "javascriptreact",
+    {
+      "language": "vue",
+      "autoFix": true
+    }
+  ],
+  "editor.formatOnSave": true,
+  "liveServer.settings.port": 5501 // 存储时自动格式代码 todo open
+}
