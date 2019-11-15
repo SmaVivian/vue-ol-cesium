@@ -18,8 +18,6 @@ let Cesium = require('cesium/Cesium')
 window.Cesium = Cesium
 // require('cesium/Widgets/widgets.css')
 import OLCesium from 'ol-cesium'
-
-// import OLCesium from 'olcs/OLCesium.js'
 import olMap from 'ol/Map.js'
 import olSourceOSM from 'ol/source/OSM.js'
 import olSourceXYZ from 'ol/source/XYZ.js'
@@ -229,7 +227,7 @@ export default {
       const scene = this.ol3d.getCesiumScene()
       scene.terrainProvider = Cesium.createWorldTerrain()
     },
-    // 测试6 左侧地图、右侧三维
+    // 测试6 左侧地图、右侧三维联动
     test6() {
       //高德地图
       var gaodeLayer = new olLayerTile({
@@ -294,6 +292,68 @@ export default {
       //   //设置视角
       //   destination: Cesium.Cartesian3.fromDegrees(116.329261, 39.897289, 100.0)
       // })
+    },
+    // 测试7 左侧地图、右侧三维并旋转
+    test7() {
+      //高德地图
+      var gaodeLayer = new olLayerTile({
+        //  source: new ol.source.XYZ({
+        source: new olSourceXYZ({
+          url:
+            'http://webst0{1-4}.is.autonavi.com/appmaptile?lang=zh_cn&size=1&scale=1&style=7&x={x}&y={y}&z={z}'
+        })
+      })
+
+      this.ol2d = new olMap({
+        layers: [gaodeLayer],
+        target: 'map',
+        view: new olView({
+          projection: 'EPSG:4326',
+          zoom: 16,
+          center: [116.329261, 39.897289, -10.0]
+          // zoom: 18,
+          // center: transform([ 108.945731,34.382717], 'EPSG:4326', 'EPSG:3857')
+        })
+      })
+
+      var viewer = new Cesium.Viewer('map3d', {
+        infoBox: false,
+        selectionIndicator: false,
+        shadows: true,
+        shouldAnimate: true
+      })
+
+      function createModel(url, height) {
+        viewer.entities.removeAll()
+
+        var position = Cesium.Cartesian3.fromDegrees(
+          -123.0744619,
+          44.0503706,
+          height
+        )
+        var heading = Cesium.Math.toRadians(135)
+        var pitch = 0
+        var roll = 0
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
+        var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+          position,
+          hpr
+        )
+
+        var entity = viewer.entities.add({
+          name: url,
+          position: position,
+          orientation: orientation,
+          model: {
+            uri: url,
+            minimumPixelSize: 128,
+            maximumScale: 20000
+          }
+        })
+        viewer.trackedEntity = entity
+      }
+
+      createModel('/public/model/male02.gltf', 0)
     }
   },
   mounted() {
@@ -306,7 +366,8 @@ export default {
     // this.test3() // 测试3 加载三维数据 gltf格式
     // this.test4() // 测试4 加载图片
     // this.test5() // 测试5 加载其他地图
-    this.test6() // 测试6 左侧地图、右侧三维数据
+    // this.test6() // 测试6 左侧地图、右侧三维数据
+    this.test7() // 测试7 左侧地图、右侧三维数据并旋转
   }
 }
 </script>
