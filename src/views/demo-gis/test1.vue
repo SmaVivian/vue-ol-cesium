@@ -13,10 +13,13 @@
 </template>
 
 <script>
+import 'ol/ol.css'
+import 'ol-cesium/dist/olcs.css'
 import 'cesium/Widgets/widgets.css'
+// import Cesium from 'cesium/Cesium'
 let Cesium = require('cesium/Cesium')
 window.Cesium = Cesium
-// require('cesium/Widgets/widgets.css')
+
 import OLCesium from 'ol-cesium'
 import olMap from 'ol/Map.js'
 import olSourceOSM from 'ol/source/OSM.js'
@@ -357,17 +360,19 @@ export default {
     }
   },
   mounted() {
-    // 3d icon修改
-    Cesium.Ion.defaultAccessToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MzAyNzUyYi0zY2QxLTQxZDItODRkOS1hNTA3MDU3ZTBiMDUiLCJpZCI6MjU0MSwiaWF0IjoxNTMzNjI1MTYwfQ.oHn1SUWJa12esu7XUUtEoc1BbEbuZpRocLetw6M6_AA'
+    this.$nextTick(() => {
+      // 3d icon修改
+      Cesium.Ion.defaultAccessToken =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MzAyNzUyYi0zY2QxLTQxZDItODRkOS1hNTA3MDU3ZTBiMDUiLCJpZCI6MjU0MSwiaWF0IjoxNTMzNjI1MTYwfQ.oHn1SUWJa12esu7XUUtEoc1BbEbuZpRocLetw6M6_AA'
 
-    // this.test1() // 测试1 三维地图
-    // this.test2() // 测试2 加载三维数据
-    // this.test3() // 测试3 加载三维数据 gltf格式
-    // this.test4() // 测试4 加载图片
-    // this.test5() // 测试5 加载其他地图
-    // this.test6() // 测试6 左侧地图、右侧三维数据
-    this.test7() // 测试7 左侧地图、右侧三维数据并旋转
+      // this.test1() // 测试1 三维地图
+      // this.test2() // 测试2 加载三维数据
+      // this.test3() // 测试3 加载三维数据 gltf格式
+      // this.test4() // 测试4 加载图片
+      // this.test5() // 测试5 加载其他地图
+      // this.test6() // 测试6 左侧地图、右侧三维数据
+      this.test7() // 测试7 左侧地图、右侧三维数据并旋转
+    })
   }
 }
 </script>
