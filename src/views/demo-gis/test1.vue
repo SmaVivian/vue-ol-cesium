@@ -155,6 +155,7 @@ export default {
           scale: 3.0 //放大倍数
         })
       )
+      // viewer.zoomTo(model)
       viewer.camera.flyTo({
         destination: Cesium.Cartesian3.fromDegrees(
           110.62898254394531,
@@ -357,13 +358,84 @@ export default {
       }
 
       createModel('/public/model/male02.gltf', 0)
+    },
+    test8() {
+      var viewer = new Cesium.Viewer('map3d', {
+        infoBox: false,
+        selectionIndicator: false,
+        shadows: true,
+        shouldAnimate: true
+      })
+      function createModel(url, height) {
+        viewer.entities.removeAll()
+
+        var position = Cesium.Cartesian3.fromDegrees(
+          -123.0744619,
+          44.0503706,
+          height
+        )
+        var heading = Cesium.Math.toRadians(135)
+        var pitch = 0
+        var roll = 0
+        var hpr = new Cesium.HeadingPitchRoll(heading, pitch, roll)
+        var orientation = Cesium.Transforms.headingPitchRollQuaternion(
+          position,
+          hpr
+        )
+
+        var entity = viewer.entities.add({
+          name: 'test',
+          position: position,
+          orientation: orientation,
+          model: {
+            uri: url,
+            minimumPixelSize: 128,
+            maximumScale: 20000
+          }
+        })
+        //viewer.trackedEntity = entity;
+        viewer.zoomTo(entity)
+      }
+
+      createModel('/public/model/male02.gltf', 0)
+    },
+    test9() {
+      var viewer = new Cesium.Viewer('map3d')
+
+      var tileset = viewer.scene.primitives.add(
+        new Cesium.Cesium3DTileset({
+          url: Cesium.IonResource.fromAssetId(103468)
+        })
+      )
+
+      tileset.readyPromise
+        .then(function() {
+          viewer.zoomTo(tileset)
+
+          // Apply the default style if it exists
+          var extras = tileset.asset.extras
+          if (
+            Cesium.defined(extras) &&
+            Cesium.defined(extras.ion) &&
+            Cesium.defined(extras.ion.defaultStyle)
+          ) {
+            tileset.style = new Cesium.Cesium3DTileStyle(
+              extras.ion.defaultStyle
+            )
+          }
+        })
+        .otherwise(function(error) {
+          console.log(error)
+        })
     }
   },
   mounted() {
     this.$nextTick(() => {
       // 3d icon修改
       Cesium.Ion.defaultAccessToken =
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MzAyNzUyYi0zY2QxLTQxZDItODRkOS1hNTA3MDU3ZTBiMDUiLCJpZCI6MjU0MSwiaWF0IjoxNTMzNjI1MTYwfQ.oHn1SUWJa12esu7XUUtEoc1BbEbuZpRocLetw6M6_AA'
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZDc5YzA0My1lZjlmLTQ0NWMtYWVjMy03M2Y3MzZmYWEzYjMiLCJpZCI6Mjc4MTcsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTAxMjI5Mjh9.pXP3BPaQ19RNj9cW7v3zUES4raQShf8dWvDkGF5vXHs'
+      // Cesium.Ion.defaultAccessToken =
+      //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MzAyNzUyYi0zY2QxLTQxZDItODRkOS1hNTA3MDU3ZTBiMDUiLCJpZCI6MjU0MSwiaWF0IjoxNTMzNjI1MTYwfQ.oHn1SUWJa12esu7XUUtEoc1BbEbuZpRocLetw6M6_AA'
 
       // this.test1() // 测试1 三维地图
       // this.test2() // 测试2 加载三维数据
@@ -371,7 +443,9 @@ export default {
       // this.test4() // 测试4 加载图片
       // this.test5() // 测试5 加载其他地图
       // this.test6() // 测试6 左侧地图、右侧三维数据
-      this.test7() // 测试7 左侧地图、右侧三维数据并旋转
+      // this.test7() // 测试7 左侧地图、右侧三维数据并旋转
+      this.test8() // 测试8 entities zoomTo三维模型
+      // this.test9() // 测试8 primitives zoomTo三维模型
     })
   }
 }
