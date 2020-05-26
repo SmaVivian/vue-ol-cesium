@@ -53,12 +53,13 @@ export const constantRouterMap = [
   { path: '/demo', component: () => import('@views/demo') },
   { path: '/gis', component: () => import('@views/demo-gis/CesiumViewer') },
   { path: '/gis1', component: () => import('@views/demo-gis/test1') },
+  { path: '/', redirect: '/gis1' },
   {
-    path: '/',
+    path: '/home',
     name: 'index',
     component: Layout,
     meta: { title: '首页' },
-    redirect: '/home',
+    // redirect: '/home',
     children: [
       // 首页
       {

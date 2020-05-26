@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <script src="https://cesium.com/downloads/cesiumjs/releases/1.69/Build/Cesium/Cesium.js"></script>
+    <link
+      href="https://cesium.com/downloads/cesiumjs/releases/1.69/Build/Cesium/Widgets/widgets.css"
+      rel="stylesheet"
+    />
+    <title>gltf三维模型</title>
+  </head>
+  <body>
+    <div id="cesiumContainer" style="width: 700px; height:400px"></div>
+    <script>
+      Cesium.Ion.defaultAccessToken =
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZDc5YzA0My1lZjlmLTQ0NWMtYWVjMy03M2Y3MzZmYWEzYjMiLCJpZCI6Mjc4MTcsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTAxMjI5Mjh9.pXP3BPaQ19RNj9cW7v3zUES4raQShf8dWvDkGF5vXHs'
+      var viewer = new Cesium.Viewer('cesiumContainer')
+
+      var promise = Cesium.IonResource.fromAssetId(103617)
+        .then(function(resource) {
+          var entity = viewer.entities.add({
+            position: Cesium.Cartesian3.fromDegrees(
+              -123.0744619,
+              44.0503706,
+              0
+            ),
+            model: {
+              uri: resource
+            }
+          })
+          viewer.trackedEntity = entity
+        })
+        .otherwise(function(error) {
+          console.log(error)
+        })
+    </script>
+  </body>
+</html>

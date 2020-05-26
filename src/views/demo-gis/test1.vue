@@ -399,11 +399,13 @@ export default {
 
       createModel('/public/model/male02.gltf', 0)
     },
+    // 加载自己上传到cesium中的文件
     test9() {
       var viewer = new Cesium.Viewer('map3d')
 
       var tileset = viewer.scene.primitives.add(
         new Cesium.Cesium3DTileset({
+          //  加载自己上传到cesium中的文件 my assets https://cesium.com/ion/
           url: Cesium.IonResource.fromAssetId(103468)
         })
       )
@@ -428,12 +430,35 @@ export default {
           console.log(error)
         })
     }
+    //  加载自己上传到cesium中的文件 my assets https://cesium.com/ion/
+    // test10() {
+    //   var viewer = new Cesium.Viewer('map3d')
+
+    //   var promise = Cesium.IonResource.fromAssetId(103617)
+    //     .then(function(resource) {
+    //       var entity = viewer.entities.add({
+    //         position: Cesium.Cartesian3.fromDegrees(
+    //           -123.0744619,
+    //           44.0503706,
+    //           0
+    //         ),
+    //         model: {
+    //           uri: resource
+    //         }
+    //       })
+    //       viewer.trackedEntity = entity
+    //     })
+    //     .otherwise(function(error) {
+    //       console.log(error)
+    //     })
+    // }
   },
   mounted() {
     this.$nextTick(() => {
       // 3d icon修改
       Cesium.Ion.defaultAccessToken =
         'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiJiZDc5YzA0My1lZjlmLTQ0NWMtYWVjMy03M2Y3MzZmYWEzYjMiLCJpZCI6Mjc4MTcsInNjb3BlcyI6WyJhc3IiLCJnYyJdLCJpYXQiOjE1OTAxMjI5Mjh9.pXP3BPaQ19RNj9cW7v3zUES4raQShf8dWvDkGF5vXHs'
+
       // Cesium.Ion.defaultAccessToken =
       //   'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI0MzAyNzUyYi0zY2QxLTQxZDItODRkOS1hNTA3MDU3ZTBiMDUiLCJpZCI6MjU0MSwiaWF0IjoxNTMzNjI1MTYwfQ.oHn1SUWJa12esu7XUUtEoc1BbEbuZpRocLetw6M6_AA'
 
@@ -442,10 +467,11 @@ export default {
       // this.test3() // 测试3 加载三维数据 gltf格式
       // this.test4() // 测试4 加载图片
       // this.test5() // 测试5 加载其他地图
-      // this.test6() // 测试6 左侧地图、右侧三维数据
+      this.test6() // 测试6 左侧地图、右侧三维数据
       // this.test7() // 测试7 左侧地图、右侧三维数据并旋转
-      this.test8() // 测试8 entities zoomTo三维模型
-      // this.test9() // 测试8 primitives zoomTo三维模型
+      // this.test8() // 测试8 entities zoomTo三维模型
+      // this.test9() // 测试9 primitives zoomTo三维模型
+      // this.test10() // 测试10 //  加载自己上传到cesium中的文件
     })
   }
 }
